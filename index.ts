@@ -45,7 +45,7 @@ function initMap(): void {
             : 'https://drive.google.com/uc?id=1iIV1llmOnK_lPguJCpaMeW-_w99WMweH',
         scaledSize: new google.maps.Size(10, 10),
       },
-      freq > 0 ? 1 : 0,
+      0,
       map
     );
   });
