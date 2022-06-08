@@ -3,39 +3,51 @@
  * Copyright 2019 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
-// In the following example, markers appear when the user clicks on the map.
-// Each marker is labeled with a single alphabetical character.
-const labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-let labelIndex = 0;
-
-function initMap(): void {
-  const bangalore = { lat: 12.97, lng: 77.59 };
-  const map = new google.maps.Map(
-    document.getElementById("map") as HTMLElement,
-    {
-      zoom: 12,
-      center: bangalore,
-    }
-  );
-
-  // This event listener calls addMarker() when the map is clicked.
-  google.maps.event.addListener(map, "click", (event) => {
-    addMarker(event.latLng, map);
-  });
-
-  // Add a marker at the center of the map.
-  addMarker(bangalore, map);
-}
+import { stationData } from './stationData';
 
 // Adds a marker to the map.
-function addMarker(location: google.maps.LatLngLiteral, map: google.maps.Map) {
+function addMarker(
+  location: google.maps.LatLngLiteral,
+  icon: google.maps.Icon,
+  zIndex: number,
+  map: google.maps.Map
+) {
   // Add the marker at the clicked location, and add the next-available label
   // from the array of alphabetical characters.
   new google.maps.Marker({
     position: location,
-    label: labels[labelIndex++ % labels.length],
+    icon: icon,
+    zIndex: zIndex,
     map: map,
+  });
+}
+
+function initMap(): void {
+  const center = { lat: 23, lng: 80 };
+  const map = new google.maps.Map(
+    document.getElementById('map') as HTMLElement,
+    {
+      zoom: 5.3,
+      center: center,
+    }
+  );
+
+  // Add a marker at the center of the map.
+  // addMarker(center, 'ANCHOR', map);
+  stationData.forEach((station) => {
+    const freq = station.boardingFreq + station.departureFreq;
+    addMarker(
+      station.location,
+      {
+        url:
+          freq > 0
+            ? 'https://drive.google.com/uc?id=1EAubx8tY7BF3aJ5Q-JEOBQ0HaY0E5THU'
+            : 'https://drive.google.com/uc?id=1iIV1llmOnK_lPguJCpaMeW-_w99WMweH',
+        scaledSize: new google.maps.Size(10, 10),
+      },
+      freq > 0 ? 1 : 0,
+      map
+    );
   });
 }
 
