@@ -59,7 +59,7 @@ function initMap(): void {
     const freq = boardingFreq + departureFreq;
     const {name = '', cityName = '', stateName = '' } = stationInfo[code];
     const { asHalt, asNonHalt } = extraStationInfo[code] || {};
-    const infoString = `<h3>${code}</h3>${name}<br>${cityName}, ${stateName}<br>MMT Users Boading : ${boardingFreq}<br>MMT Users Deboarding : ${departureFreq}<br>Halting : ${asHalt || 0} trains<br>As Non Halting : ${asNonHalt || 0} trains`;
+    const infoString = `<h3>${code}</h3>${name}<br>${cityName}, ${stateName}<br>MMT Users Boading : ${boardingFreq}<br>MMT Users Deboarding : ${departureFreq}<br>Halting : ${asHalt || 0} trains<br>Non Halting : ${asNonHalt || 0} trains`;
     addMarker(
       location,
       {
